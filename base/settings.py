@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_jwt',
     'drf_yasg',
+    "appuser"
 ]
 
 MIDDLEWARE = [
@@ -136,7 +137,7 @@ MEDIA_URL = '/media/'
 # logs folder
 LOGS_ROOT = os.path.join(BASE_DIR, 'logs')
 
-# AUTH_USER_MODEL = 'appuser.User'
+AUTH_USER_MODEL = 'appuser.User'
 
 CORS_ORIGIN_ALLOW_ALL = True  # If this is used then `CORS_ORIGIN_WHITELIST` will not have any effect
 

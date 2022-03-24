@@ -36,9 +36,16 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-  path('admin/', admin.site.urls),
-  re_path(r'^apis(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-  re_path(r'^apis/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-  re_path(r'^apis/redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+                  path('admin/', admin.site.urls),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  # """INSERER VOS LIENS ICI """
+
+                  # path('user/', include('appuser.user_urls')),
+
+                  # """ drf_yasg URLS """
+                  re_path(r'^apis(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0),
+                          name='schema-json'),
+                  re_path(r'^apis/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+                  re_path(r'^apis/redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

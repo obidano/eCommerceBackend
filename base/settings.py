@@ -136,6 +136,7 @@ MEDIA_URL = '/media/'
 
 # logs folder
 LOGS_ROOT = os.path.join(BASE_DIR, 'logs')
+STATIC2_ROOT = os.path.join(BASE_DIR, 'root', "static")
 
 AUTH_USER_MODEL = 'appuser.User'
 

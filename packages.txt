@@ -1,0 +1,8 @@
+pip>=22.0.4
+pillow
+Django
+django-cors-headers
+djangorestframework
+djangorestframework-jwt
+requests
+drf-yasg

@@ -9,7 +9,7 @@ import json
 
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([])
 def connexionAPI(requete):
     data = json.loads(requete.body)
     username = data['username']
@@ -27,8 +27,8 @@ def connexionAPI(requete):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 @authentication_classes([JWTAuthentication])
 def donneeConfidentielleAPI(requete):
-    reponse_serveur = dict(msg="Je suis autorisé à consulter ces données")
+    username = requete.user.username
+    reponse_serveur = dict(msg=f"Je suis autorisé à consulter ces données en tant que {username}")
     return Response(reponse_serveur)

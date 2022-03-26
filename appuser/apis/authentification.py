@@ -1,11 +1,10 @@
+import json
+
 from django.contrib.auth import authenticate, login
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
-from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication, JWTAuthentication
-from appuser.models import User
-import json
 
 
 @api_view(['POST'])

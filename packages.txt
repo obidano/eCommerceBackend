@@ -3,6 +3,7 @@ pillow
 Django
 django-cors-headers
 djangorestframework
-djangorestframework-jwt
+djangorestframework_simplejwt
 requests
 drf-yasg
+PyJWT==1.7.1

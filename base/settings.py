@@ -10,10 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-from base.utilitaires import createFolders
+from base.utilitaires import createFolders, configDebugLog, createSQLiteFile
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,10 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders',
-    'rest_framework_jwt',
     'drf_yasg',
-    "appuser"
+    "appuser",
 ]
 
 MIDDLEWARE = [
@@ -126,9 +127,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'root', 'static')
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'base', 'static')
+# ]
 
 # media folder setting
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -136,12 +137,73 @@ MEDIA_URL = '/media/'
 
 # logs folder
 LOGS_ROOT = os.path.join(BASE_DIR, 'logs')
-STATIC2_ROOT = os.path.join(BASE_DIR, 'root', "static")
+STATIC2_ROOT = os.path.join(BASE_DIR, 'base', "static")
 
 AUTH_USER_MODEL = 'appuser.User'
 
 CORS_ORIGIN_ALLOW_ALL = True  # If this is used then `CORS_ORIGIN_WHITELIST` will not have any effect
 
+# creer des dossiers necessaires au projet
 DEFAULT_FOLDERS_LIST = [STATIC_ROOT, MEDIA_ROOT, LOGS_ROOT]
-
 createFolders(DEFAULT_FOLDERS_LIST)
+
+# CREER LE FICHIER SQLITE PAR DEFAUT
+createSQLiteFile(BASE_DIR)
+
+"""PATH"""
+DEBUG_LOG_PATH = os.path.join(BASE_DIR, 'logs', 'debug_%s.log')
+ERROR_LOG_PATH = os.path.join(BASE_DIR, 'logs', 'error_%s.log')
+
+"""LOGGER"""
+DEBUG_LOGGER = configDebugLog('debug', DEBUG_LOG_PATH)
+ERROR_LOGGER = configDebugLog('error', ERROR_LOG_PATH)
+
+"""
+************
+    FONCTION POUR CAPTURER LES ERREURS COMPLETEMENT VERS LES LOGS
+************
+"""
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBackend']
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+    'EXCEPTION_HANDLER': 'base.capture_erreur_api.custom_exception_handler'
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'UPDATE_LAST_LOGIN': False,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+    'JWK_URL': None,
+    'LEEWAY': 0,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'AUTHORIZATION',
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+    'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
+
+    'JTI_CLAIM': 'jti',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}

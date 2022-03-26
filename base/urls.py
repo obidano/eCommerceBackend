@@ -40,7 +40,7 @@ urlpatterns = [
 
                   # """INSERER VOS LIENS ICI """
 
-                  # path('user/', include('appuser.user_urls')),
+                  path('user/', include('appuser.user_urls')),
 
                   # """ drf_yasg URLS """
                   re_path(r'^apis(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0),

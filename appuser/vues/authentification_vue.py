@@ -9,7 +9,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 @api_view(['POST'])
 @permission_classes([])
-def connexionAPI(requete):
+def authentificationAPI(requete):
+    # si les données sont envoyées en json, utilisez ceci  data = json.loads(reqyete.body)
     data = requete.POST.dict()
     username = data['username']
     password = data['password']
@@ -23,6 +24,3 @@ def connexionAPI(requete):
 
     reponse_serveur = dict(msg="Je suis connecté", token=str(token.access_token))
     return Response(reponse_serveur)
-
-
-

@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "21b2e09c-b70d-4490-8599-0b84ab8d6693",
+		"name": "ecommerce_backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "authentifier",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{IP}}/api/user/authentifier",
+					"host": [
+						"{{IP}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"authentifier"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "public_data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{IP}}/api/public_data",
+					"host": [
+						"{{IP}}"
+					],
+					"path": [
+						"api",
+						"public_data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "private_data",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{IP}}/api/private_data",
+					"host": [
+						"{{IP}}"
+					],
+					"path": [
+						"api",
+						"private_data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "soumettre_donnees",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nom",
+							"value": "boisson",
+							"type": "text"
+						},
+						{
+							"key": "quantite",
+							"value": "50",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{IP}}/api/soumettre_data",
+					"host": [
+						"{{IP}}"
+					],
+					"path": [
+						"api",
+						"soumettre_data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mettre_a_jour_donnees",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nom",
+							"value": "boisson",
+							"type": "text"
+						},
+						{
+							"key": "quantite",
+							"value": "55",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{IP}}/api/update_data",
+					"host": [
+						"{{IP}}"
+					],
+					"path": [
+						"api",
+						"update_data"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

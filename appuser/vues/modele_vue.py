@@ -28,6 +28,7 @@ def recupererDonneesProtegeesAPI(requete):
 
 @api_view(['POST'])  # POST est une methode utilisée principalement pour soumettre des données  au serveur
 def soumettreDonneesAPI(requete):
+    # si les données sont envoyées en json, utilisez ceci  data = json.loads(reqyete.body)
     data = requete.POST.dict()  # données envoyés par le client (navigateur)
     reponse_serveur = dict(msg=f"Nous avons bien reçu vos informations", donnees=data)
     return Response(reponse_serveur)

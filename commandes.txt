@@ -1,0 +1,7 @@
+git checkout -- .
+git pull
+python manage.py createsuperuser
+python manage.py runserver   ------> sur un autre terminal
+python manage.py startapp ________
+python manage.py makemigrations
+python manage.py migrate

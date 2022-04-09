@@ -10,7 +10,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 @api_view(['POST'])
 @permission_classes([])
 def connexionAPI(requete):
-    data = json.loads(requete.body)
+    data = requete.POST.dict()
     username = data['username']
     password = data['password']
     user = authenticate(username=username, password=password)
@@ -25,9 +25,4 @@ def connexionAPI(requete):
     return Response(reponse_serveur)
 
 
-@api_view(['GET'])
-@authentication_classes([JWTAuthentication])
-def donneeConfidentielleAPI(requete):
-    username = requete.user.username
-    reponse_serveur = dict(msg=f"Je suis autorisé à consulter ces données en tant que {username}")
-    return Response(reponse_serveur)
+

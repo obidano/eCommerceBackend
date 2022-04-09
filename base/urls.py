@@ -23,12 +23,20 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
 from appuser.views import liste_clients_api
+from appuser.vues.authentification_vue import connexionAPI
+from appuser.vues.modele_vue import recupererDonneesPubliqueAPI, recupererDonneesProtegeesAPI, soumettreDonneesAPI, \
+    mettreAJourDonneesAPI
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
 
                   # """INSERER VOS LIENS ICI """
-                  path('client/liste', liste_clients_api)
-                  # path('user/', include('appuser.user_urls')),
+                  # path('client/liste', liste_clients_api),
+                  path('api/public_data', recupererDonneesPubliqueAPI),
+                  path('api/private_data', recupererDonneesProtegeesAPI),
+                  path('api/soumettre_data', soumettreDonneesAPI),
+                  path('api/update_data', mettreAJourDonneesAPI),
+
+                  path('api/user/authentifier', connexionAPI),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
